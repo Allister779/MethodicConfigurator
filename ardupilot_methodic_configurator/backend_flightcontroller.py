@@ -8,6 +8,8 @@ SPDX-FileCopyrightText: 2024-2026 Amilcar do Carmo Lucas <amilcar.lucas@iav.de>
 SPDX-License-Identifier: GPL-3.0-or-later
 """
 
+# pylint: disable=too-many-lines
+
 from argparse import ArgumentParser
 from collections.abc import Callable, Sequence
 from logging import info as logging_info
@@ -830,6 +832,18 @@ class FlightController:  # pylint: disable=too-many-public-methods,too-many-inst
     def stop_all_motors(self) -> tuple[bool, str]:
         """Emergency stop for all motors - delegates to commands manager."""
         return self._commands_manager.stop_all_motors()
+
+    def set_flight_mode(self, custom_mode: int) -> tuple[bool, str]:
+        """Request a vehicle-specific flight mode - delegates to commands manager."""
+        return self._commands_manager.set_flight_mode(custom_mode)
+
+    def send_rc_channels_override(self, channel_pwm: dict[int, int]) -> tuple[bool, str]:
+        """Send one RC_CHANNELS_OVERRIDE message - delegates to commands manager."""
+        return self._commands_manager.send_rc_channels_override(channel_pwm)
+
+    def request_servo_output_messages(self, interval_microseconds: int = 200_000) -> tuple[bool, str]:
+        """Request SERVO_OUTPUT_RAW telemetry - delegates to commands manager."""
+        return self._commands_manager.request_servo_output_messages(interval_microseconds)
 
     # Accelerometer Calibration - Delegated to commands manager
 
